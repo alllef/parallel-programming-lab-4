@@ -4,14 +4,14 @@ import com.github.alllef.algorithm.AvgWordLengthTextAnalyzeAlgo;
 import com.github.alllef.algorithm.TextAnalyzeAlgo;
 
 import java.io.File;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ForkJoinPool;
+import java.util.function.Supplier;
 
-public class PoolExecution implements Runnable {
-    @Override
-    public void run() {
+public class PoolExecution {
+
+    public Supplier<?> execute(String filePath,TextAnalyzeAlgo textAnalyzeAlgo) {
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
-        TextAnalyzeAlgo textAnalyzeAlgo = new AvgWordLengthTextAnalyzeAlgo();
-        String filePath = "src/main/resources/test-dir";
-        System.out.println(forkJoinPool.invoke(new FolderSearchTask(textAnalyzeAlgo, new File(filePath))).get());
+        return ()->forkJoinPool.invoke(new FolderSearchTask(textAnalyzeAlgo, new File(filePath))).get();
     }
 }

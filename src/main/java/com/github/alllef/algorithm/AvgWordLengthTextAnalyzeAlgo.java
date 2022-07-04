@@ -6,7 +6,8 @@ import java.util.function.Supplier;
 public class AvgWordLengthTextAnalyzeAlgo implements TextAnalyzeAlgo {
     @Override
     public Supplier<?> analyze(String text) {
-        return () -> Arrays.stream(text.split(" +"))
+        return () -> Arrays.stream(text.split("[\\W]"))
+                .filter(str->!str.equals(""))
                 .mapToInt(String::length)
                 .average()
                 .stream()

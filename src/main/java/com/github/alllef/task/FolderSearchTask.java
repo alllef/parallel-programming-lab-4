@@ -26,11 +26,14 @@ public class FolderSearchTask extends RecursiveTask<Supplier<?>> {
             if (file.isFile())
                 tasks.add(new DocumentSearchTask(textAnalyzeAlgo, file));
             else
-                tasks.add(new FolderSearchTask(textAnalyzeAlgo,file));
+                tasks.add(new FolderSearchTask(textAnalyzeAlgo, file));
         }
-        return ()-> FolderSearchTask.invokeAll(tasks)
+        return () -> FolderSearchTask.invokeAll(tasks)
                 .stream()
-                .mapToInt(task->(int)task.join().get())
-                .average();
+                .mapToInt(task -> (int) task.join().get())
+                .average()
+                .stream()
+                .mapToInt(d -> Double.valueOf(d).intValue())
+                .findAny().orElse(0);
     }
 }
