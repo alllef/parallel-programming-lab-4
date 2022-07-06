@@ -10,8 +10,8 @@ import java.util.function.Supplier;
 
 public class PoolExecution {
 
-    public Supplier<?> execute(String filePath,TextAnalyzeAlgo textAnalyzeAlgo) {
+    public Supplier<?> execute(String filePath, TextAnalyzeAlgo textAnalyzeAlgo) {
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
-        return ()->forkJoinPool.invoke(new FolderSearchTask(textAnalyzeAlgo, new File(filePath))).get();
+        return () -> forkJoinPool.invoke(new FolderSearchTask(textAnalyzeAlgo, new File(filePath))).get();
     }
 }
