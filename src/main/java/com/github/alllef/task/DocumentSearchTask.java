@@ -1,6 +1,10 @@
 package com.github.alllef.task;
 
+import com.github.alllef.algorithm.implementation.AvgWordLengthTextAnalyzeAlgo;
+import com.github.alllef.algorithm.implementation.CommonWordsTextAnalyzeAlgo;
 import com.github.alllef.algorithm.implementation.TextAnalyzeAlgo;
+import com.github.alllef.algorithm.result.AvgWordLengthStats;
+import com.github.alllef.algorithm.result.CommonWords;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,13 +15,13 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class DocumentSearchTask<T> extends RecursiveTask<T> {
+public class DocumentSearchTask<T> extends RecursiveTask<T> {
     private TextAnalyzeAlgo<T> textAnalyzeAlgo;
     private final File document;
 
-    public DocumentSearchTask(File document) {
+    private DocumentSearchTask(File document, TextAnalyzeAlgo<T> textAnalyzeAlgo) {
         this.document = document;
-        this.textAnalyzeAlgo=getTextAnalyzeAlgo();
+        this.textAnalyzeAlgo = textAnalyzeAlgo;
     }
 
     @Override
@@ -34,5 +38,11 @@ public abstract class DocumentSearchTask<T> extends RecursiveTask<T> {
         return "";
     }
 
-    public abstract TextAnalyzeAlgo<T> getTextAnalyzeAlgo();
+    public static DocumentSearchTask<AvgWordLengthStats> getAvgWordLengthTask(File file) {
+        return new DocumentSearchTask<>(file, new AvgWordLengthTextAnalyzeAlgo());
+    }
+
+    public static DocumentSearchTask<CommonWords> getCommonWordsTask(File file) {
+        return new DocumentSearchTask<>(file, new CommonWordsTextAnalyzeAlgo());
+    }
 }

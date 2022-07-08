@@ -7,22 +7,23 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record AvgWordLengthStats(double avgLength, Map<Integer, Integer> histogram, double standardDeviation,
-                                 int wordsNum) {
+                                 int wordsNum) implements Combineable<AvgWordLengthStats>{
 
-    public AvgWordLengthStats add(AvgWordLengthStats stats) {
-        double newAvgLength = (this.avgLength + stats.avgLength()) / 2;
+    @Override
+    public AvgWordLengthStats combine(AvgWordLengthStats entity) {
+        double newAvgLength = (this.avgLength + entity.avgLength()) / 2;
 
         Map<Integer, Integer> newHistogram = new HashMap<>();
 
         Set<Integer> allKeys = new HashSet<>(this.histogram.keySet());
-        allKeys.addAll(stats.histogram().keySet());
+        allKeys.addAll(entity.histogram().keySet());
 
 
         for (Integer key : allKeys)
-            newHistogram.put(key, this.histogram.getOrDefault(key, 0) + stats.histogram().getOrDefault(key, 0));
+            newHistogram.put(key, this.histogram.getOrDefault(key, 0) + entity.histogram().getOrDefault(key, 0));
 
-        double newStandardDeviation = (this.standardDeviation + stats.standardDeviation()) / 2;
-        int newWordsNum = this.wordsNum + stats.wordsNum();
+        double newStandardDeviation = (this.standardDeviation + entity.standardDeviation()) / 2;
+        int newWordsNum = this.wordsNum + entity.wordsNum();
         return new AvgWordLengthStats(newAvgLength, newHistogram, newStandardDeviation, newWordsNum);
     }
 }
