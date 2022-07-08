@@ -1,39 +1,37 @@
 package com.github.alllef.task;
 
-import com.github.alllef.algorithm.TextAnalyzeAlgo;
+import com.github.alllef.algorithm.implementation.TextAnalyzeAlgo;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
 import java.util.function.Supplier;
 
-public class FolderSearchTask extends RecursiveTask<Supplier<?>> {
-    private final TextAnalyzeAlgo textAnalyzeAlgo;
+public abstract class FolderSearchTask<T> extends RecursiveTask<T> {
     private final File folder;
+    private TaskFactory<T> taskFactory;
 
-    public FolderSearchTask(TextAnalyzeAlgo textAnalyzeAlgo, File document) {
-        this.textAnalyzeAlgo = textAnalyzeAlgo;
+    public FolderSearchTask(File document) {
         this.folder = document;
+        this.taskFactory=getTaskFactory();
     }
 
     @Override
-    protected Supplier<?> compute() {
+    protected T compute() {
         File[] files = folder.listFiles();
-        List<ForkJoinTask<Supplier<?>>> tasks = new ArrayList<>();
+        List<ForkJoinTask<T>> tasks = new ArrayList<>();
         for (File file : files) {
             if (file.isFile())
-                tasks.add(new DocumentSearchTask(textAnalyzeAlgo, file));
+                tasks.add(taskFactory.getDocumentSearchTask(file));
             else
-                tasks.add(new FolderSearchTask(textAnalyzeAlgo, file));
+                tasks.add(taskFactory.getFolderSearchTask(file));
         }
-        return () -> FolderSearchTask.invokeAll(tasks)
-                .stream()
-                .mapToInt(task -> (int) task.join().get())
-                .average()
-                .stream()
-                .mapToInt(d -> Double.valueOf(d).intValue())
-                .findAny().orElse(0);
+        return combineTasks(FolderSearchTask.invokeAll(tasks));
     }
+
+    protected abstract T combineTasks(Collection<ForkJoinTask<T>> tasks);
+    protected abstract TaskFactory<T> getTaskFactory();
 }

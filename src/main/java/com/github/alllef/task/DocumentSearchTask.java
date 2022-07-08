@@ -1,6 +1,6 @@
 package com.github.alllef.task;
 
-import com.github.alllef.algorithm.TextAnalyzeAlgo;
+import com.github.alllef.algorithm.implementation.TextAnalyzeAlgo;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,18 +11,17 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class DocumentSearchTask extends RecursiveTask<Supplier<?>> {
-    private final TextAnalyzeAlgo textAnalyzeAlgo;
+public abstract class DocumentSearchTask<T> extends RecursiveTask<T> {
+    private TextAnalyzeAlgo<T> textAnalyzeAlgo;
     private final File document;
 
-    public DocumentSearchTask(TextAnalyzeAlgo textAnalyzeAlgo, File document) {
-        this.textAnalyzeAlgo = textAnalyzeAlgo;
+    public DocumentSearchTask(File document) {
         this.document = document;
+        this.textAnalyzeAlgo=getTextAnalyzeAlgo();
     }
 
     @Override
-    protected Supplier<?> compute() {
-        Supplier<?> algo = () -> textAnalyzeAlgo.analyze(documentToText());
+    protected T compute() {
         return textAnalyzeAlgo.analyze(documentToText());
     }
 
@@ -34,4 +33,6 @@ public class DocumentSearchTask extends RecursiveTask<Supplier<?>> {
         }
         return "";
     }
+
+    public abstract TextAnalyzeAlgo<T> getTextAnalyzeAlgo();
 }
