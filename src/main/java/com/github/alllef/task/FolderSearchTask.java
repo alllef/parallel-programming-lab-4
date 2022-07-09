@@ -1,8 +1,10 @@
 package com.github.alllef.task;
 
+import com.github.alllef.algorithm.implementation.KeyWordsSearchTextAnalyzeAlgo;
 import com.github.alllef.algorithm.result.AvgWordLengthStats;
 import com.github.alllef.algorithm.result.Combineable;
 import com.github.alllef.algorithm.result.CommonWords;
+import com.github.alllef.algorithm.result.KeyWordsPercentage;
 import com.github.alllef.task.factory.AvgWordLengthTaskFactory;
 import com.github.alllef.task.factory.CommonWordsTaskFactory;
 import com.github.alllef.task.factory.TaskFactory;
@@ -11,6 +13,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
 
@@ -50,6 +53,10 @@ public class FolderSearchTask<T extends Combineable<T>> extends RecursiveTask<T>
 
     public static FolderSearchTask<CommonWords> getCommonWordsTask(File file) {
         return new FolderSearchTask<>(file, new CommonWordsTaskFactory());
+    }
+
+    public static FolderSearchTask<KeyWordsPercentage> getKeyWordsSearchTask(File file, Set<String> keyWords) {
+        return new FolderSearchTask<>(file, );
     }
 
 }
