@@ -56,7 +56,7 @@ public class FolderSearchTask<T extends Combineable<T>> extends RecursiveTask<T>
     }
 
     public static FolderSearchTask<KeyWordsPercentage> getKeyWordsSearchTask(File file, Set<String> keyWords) {
-        return new FolderSearchTask<>(file, );
+        return new FolderSearchTask<>(file,);
     }
 
 }
