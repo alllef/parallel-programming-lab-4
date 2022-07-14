@@ -13,7 +13,7 @@ public class CommonWordsTaskFactory implements TaskFactory<CommonWords>{
     }
 
     @Override
-    public FolderSearchTask<CommonWords> getFolderSearchTask(File file) {
+    public FolderSearchTask<CommonWords> getKeyWordsFolderSearchTask(File file) {
         return FolderSearchTask.getCommonWordsTask(file);
     }
 }

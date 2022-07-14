@@ -14,7 +14,7 @@ public class AvgWordLengthTaskFactory implements TaskFactory<AvgWordLengthStats>
     }
 
     @Override
-    public FolderSearchTask<AvgWordLengthStats> getFolderSearchTask(File file) {
+    public FolderSearchTask<AvgWordLengthStats> getKeyWordsFolderSearchTask(File file) {
         return FolderSearchTask.getAvgWordLengthTask(file);
     }
 }

@@ -20,7 +20,12 @@ public class KeyWordsSearchTaskFactory implements TaskFactory<KeyWordsPercentage
     }
 
     @Override
-    public FolderSearchTask<KeyWordsPercentage> getFolderSearchTask(File file) {
+    public FolderSearchTask<KeyWordsPercentage> getKeyWordsFolderSearchTask(File file) {
+        return FolderSearchTask.getKeyWordsSearchTask(file,keyWords);
+    }
+
+    @Override
+    public FolderSearchTask<KeyWordsPercentage> getKeyWordsFolderSearchTask(File file, Set<String> keyWords) {
         return FolderSearchTask.getKeyWordsSearchTask(file,keyWords);
     }
 }

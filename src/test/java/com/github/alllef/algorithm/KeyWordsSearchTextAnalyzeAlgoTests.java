@@ -14,9 +14,9 @@ public class KeyWordsSearchTextAnalyzeAlgoTests {
 
     @Test
     void algoTest() {
-        String testString = "Hello yes something";
+        String testString = "hello yes something";
         KeyWordsPercentage percentage = algo.analyze(testString);
-        assertEquals(percentage.percentageByFile().get("something"),66,2);
+        assertEquals(66,percentage.percentageByFile().get("something"),2);
     }
 
     @Test
@@ -24,6 +24,6 @@ public class KeyWordsSearchTextAnalyzeAlgoTests {
         KeyWordsPercentage percentageFirst = new KeyWordsPercentage(Map.of("hello",25.4));
         KeyWordsPercentage percentageSecond = new KeyWordsPercentage(Map.of("good",35.6,"bad",45.8));
         KeyWordsPercentage result = percentageFirst.combine(percentageSecond);
-        assertEquals(Set.of("hello,good,bad"),result.percentageByFile().keySet());
+        assertEquals(Set.of("hello","good","bad"),result.percentageByFile().keySet());
     }
 }

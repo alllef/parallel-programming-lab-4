@@ -9,8 +9,8 @@ import java.util.function.Supplier;
 
 public class PoolExecution {
 
-    public AvgWordLengthStats execute(String filePath) {
+   /* public AvgWordLengthStats execute(String filePath) {
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
         return forkJoinPool.invoke(new AvgWordLengthFolderSearchTask(new File(filePath)));
-    }
+    }*/
 }
