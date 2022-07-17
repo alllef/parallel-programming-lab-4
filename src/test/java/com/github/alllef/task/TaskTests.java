@@ -11,7 +11,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskTests {
-    private final String filePath = "src/main/resources/test-dir";
+    private final String filePath = "src/main/resources/abel";
 
     @Test
     void avgWordLengthTaskTest() {
