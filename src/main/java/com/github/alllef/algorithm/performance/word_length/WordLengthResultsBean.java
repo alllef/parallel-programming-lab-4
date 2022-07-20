@@ -1,10 +1,10 @@
-package com.github.alllef.algorithm.performance;
+package com.github.alllef.algorithm.performance.word_length;
 
-public class ResultsBean {
+public class WordLengthResultsBean {
     private int wordsNum;
     private long timeInMillisSeconds;
 
-    public ResultsBean(int wordsNum, long timeInMillisSeconds) {
+    public WordLengthResultsBean(int wordsNum, long timeInMillisSeconds) {
         this.wordsNum = wordsNum;
         this.timeInMillisSeconds = timeInMillisSeconds;
     }

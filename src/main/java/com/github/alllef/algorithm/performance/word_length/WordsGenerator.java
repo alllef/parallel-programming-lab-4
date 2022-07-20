@@ -1,4 +1,4 @@
-package com.github.alllef.algorithm.performance;
+package com.github.alllef.algorithm.performance.word_length;
 
 import java.io.File;
 import java.io.FileWriter;
