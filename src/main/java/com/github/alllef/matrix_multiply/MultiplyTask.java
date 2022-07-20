@@ -30,7 +30,7 @@ public class MultiplyTask extends RecursiveTask<int[][]> {
         for (int currCol = 0; currCol < columnNum; currCol++) {
             resultMatr[subTaskNum][currSecondMatrCol] += firstMatrRow[currCol] * secondMatr[currCol][currSecondMatrCol];
         }
-        if (currIter < iterNum) {
+        if (currIter+1 < iterNum) {
             MultiplyTask multiplyTask = new MultiplyTask(currIter + 1, subTaskNum, firstMatrRow, secondMatr, resultMatr);
             ForkJoinTask.invokeAll(List.of(multiplyTask));
         }
